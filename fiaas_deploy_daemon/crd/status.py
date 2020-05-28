@@ -108,5 +108,5 @@ def create_name(name, deployment_id):
     By convention, the names of Kubernetes resources should be up to maximum length of 253
     characters and consist of lower case alphanumeric characters, '-', and '.'.
     """
-    suffix = b32encode(struct.pack('q', hash(deployment_id))).lower().strip("=")
+    suffix = b32encode(struct.pack('q', hash(deployment_id))).decode("utf-8").lower().strip("=")
     return "{}-{}".format(name, suffix)
