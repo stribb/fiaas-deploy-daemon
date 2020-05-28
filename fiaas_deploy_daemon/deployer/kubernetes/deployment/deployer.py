@@ -153,11 +153,11 @@ class DeploymentDeployer(object):
         constants["ARTIFACT_NAME"] = app_spec.name
         constants["IMAGE"] = app_spec.image
         constants["VERSION"] = app_spec.version
-        env = [EnvVar(name=name, value=value) for name, value in constants.iteritems()]
+        env = [EnvVar(name=name, value=value) for name, value in constants.items()]
 
         # For backward compatibility. https://github.schibsted.io/finn/fiaas-deploy-daemon/pull/34
         global_env = []
-        for name, value in self._global_env.iteritems():
+        for name, value in self._global_env.items():
             if "FIAAS_{}".format(name) not in constants and name not in constants:
                 global_env.extend([EnvVar(name=name, value=value), EnvVar(name="FIAAS_{}".format(name), value=value)])
             else:
@@ -209,7 +209,7 @@ def _make_probe(check_spec):
     if check_spec.http:
         probe.httpGet = HTTPGetAction(path=check_spec.http.path, port=check_spec.http.port,
                                       httpHeaders=[HTTPHeader(name=name, value=value)
-                                                   for name, value in check_spec.http.http_headers.items()])
+                                                   for name, value in list(check_spec.http.http_headers.items())])
     elif check_spec.tcp:
         probe.tcpSocket = TCPSocketAction(port=check_spec.tcp.port)
     elif check_spec.execute:

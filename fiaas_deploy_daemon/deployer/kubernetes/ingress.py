@@ -14,7 +14,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import absolute_import
+
 
 import base64
 import hashlib
@@ -55,7 +55,7 @@ class IngressDeployer(object):
     def _create(self, app_spec, labels):
         LOG.info("Creating/updating ingress for %s", app_spec.name)
         annotations = {
-            u"fiaas/expose": u"true" if _has_explicitly_set_host(app_spec) else u"false"
+            "fiaas/expose": "true" if _has_explicitly_set_host(app_spec) else "false"
         }
 
         custom_labels = merge_dicts(app_spec.labels.ingress, labels)
@@ -79,7 +79,7 @@ class IngressDeployer(object):
 
     def _generate_default_hosts(self, name):
         for suffix in self._ingress_suffixes:
-            yield u"{}.{}".format(name, suffix)
+            yield "{}.{}".format(name, suffix)
 
     def _create_default_host_ingress_rules(self, app_spec):
         all_pathmappings = chain.from_iterable(ingress_item.pathmappings for ingress_item in app_spec.ingresses)
@@ -118,7 +118,7 @@ def _has_explicitly_set_host(app_spec):
 
 
 def _has_http_port(app_spec):
-    return any(port.protocol == u"http" for port in app_spec.ports)
+    return any(port.protocol == "http" for port in app_spec.ports)
 
 
 def _has_ingress(app_spec):
@@ -145,9 +145,9 @@ class IngressTls(object):
             tls_annotations = {}
             if self._cert_issuer or app_spec.ingress_tls.certificate_issuer:
                 issuer = app_spec.ingress_tls.certificate_issuer if app_spec.ingress_tls.certificate_issuer else self._cert_issuer
-                tls_annotations[u"certmanager.k8s.io/cluster-issuer"] = issuer
+                tls_annotations["certmanager.k8s.io/cluster-issuer"] = issuer
             else:
-                tls_annotations[u"kubernetes.io/tls-acme"] = u"true"
+                tls_annotations["kubernetes.io/tls-acme"] = "true"
             ingress.metadata.annotations = merge_dicts(
                 ingress.metadata.annotations if ingress.metadata.annotations else {},
                 tls_annotations

@@ -93,7 +93,7 @@ class TestDeploymentDeployer(object):
         config.pre_stop_delay = 1
         config.log_format = "json"
         config.use_in_memory_emptydirs = use_in_memory_emptydirs
-        config.deployment_max_surge = u"25%"
+        config.deployment_max_surge = "25%"
         config.deployment_max_unavailable = 0
         yield config
 
@@ -386,7 +386,7 @@ def create_expected_deployment(config,
     } if add_init_container_annotations else {}
     pod_annotations = _none_if_empty(merge_dicts(pod_annotations, init_container_annotations))
 
-    max_surge = u"25%"
+    max_surge = "25%"
     max_unavailable = 0
     if app_spec.replicas == 1 and app_spec.singleton:
         max_surge = 0
