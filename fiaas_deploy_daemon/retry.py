@@ -38,7 +38,7 @@ fiaas_upsert_conflict_failure_counter = Counter(
 class UpsertConflict(Exception):
     def __init__(self, cause, response):
         self.traceback = sys.exc_info()
-        super(self.__class__, self).__init__(cause.message)
+        super().__init__(*cause.args)
         self.response = response
 
     def __str__(self):
