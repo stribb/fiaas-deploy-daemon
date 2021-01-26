@@ -59,8 +59,8 @@ def app_spec():
         teams=[u'foo'],
         tags=[u'bar'],
         deployment_id="test_app_deployment_id",
-        labels=LabelAndAnnotationSpec({}, {}, {}, {}, {}, {}),
-        annotations=LabelAndAnnotationSpec({}, {}, {}, {}, {}, {}),
+        labels=LabelAndAnnotationSpec({}, {}, {}, {}, {}, {}, {}),
+        annotations=LabelAndAnnotationSpec({}, {}, {}, {}, {}, {}, {}),
         ingresses=[IngressItemSpec(host=None, pathmappings=[IngressPathMappingSpec(path="/", port=80)], annotations={})],
         strongbox=StrongboxSpec(enabled=False, iam_role=None, aws_region="eu-west-1", groups=None),
         singleton=False,
@@ -188,6 +188,6 @@ def _open():
         yield mock_open
 
 
-@pytest.fixture(scope="session", params=("v1.9.11", "v1.12.10", "v1.14.4", pytest.param("v1.16.3", marks=pytest.mark.e2e_latest)))
+@pytest.fixture(scope="session", params=("v1.9.11", "v1.12.10", "v1.14.10", pytest.param("v1.16.3", marks=pytest.mark.e2e_latest)))
 def k8s_version(request):
     yield request.param
